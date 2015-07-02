@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
 
 	private ArrayList<FeedItem> Feeds = new ArrayList<FeedItem>();
 	private ListAdapter adapter = null;
+	public static final int NUMBER_OF_POSTS = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends Activity {
 		if (isNetworkAvailable()) {
 			Toast.makeText(this, "Red disponible", Toast.LENGTH_LONG).show();
 			GetBlogPostsTask getBlogPostsTask = new GetBlogPostsTask();
+			getBlogPostsTask.postsCount = NUMBER_OF_POSTS;
 			getBlogPostsTask.execute();
 		}
 		else {
