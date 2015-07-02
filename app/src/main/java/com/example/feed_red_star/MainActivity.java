@@ -1,11 +1,14 @@
 package com.example.feed_red_star;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
@@ -29,6 +32,13 @@ public class MainActivity extends Activity {
 		item.setTitulo("Hola Mundo");
 		Feeds.add(item);
 		adapter.notifyDataSetChanged();
+
+		if (isNetworkAvailable()) {
+			Toast.makeText(this, "Red disponible", Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(this, "Red no disponible", Toast.LENGTH_LONG).show();
+		}
     }
 
     @Override
@@ -49,4 +59,16 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+	private boolean isNetworkAvailable() {
+		ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+		boolean isAvailable = false;
+		if (networkInfo != null && networkInfo.isConnected()) {
+			isAvailable = true;
+		}
+
+		return isAvailable;
+	}
 }
