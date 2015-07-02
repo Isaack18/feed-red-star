@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
-	private ArrayList<FeedItem> Feeds = new ArrayList<FeedItem>();
+	private ArrayList<FeedItem> feeds = new ArrayList<FeedItem>();
 	private ListAdapter adapter = null;
-	public static final int NUMBER_OF_POSTS = 20;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,21 +23,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
 		if (adapter == null) {
-			adapter = new ListAdapter(this, 0, Feeds);
+			adapter = new ListAdapter(this, 0, feeds);
 		}
 
-		ListView list = (ListView) findViewById(R.id.listFeeds);
-		list.setAdapter(adapter);
-
-		FeedItem item = new FeedItem();
-		item.setTitulo("Hola Mundo");
-		Feeds.add(item);
-		adapter.notifyDataSetChanged();
+		ListView listFeeds = (ListView) findViewById(R.id.listFeeds);
+		listFeeds.setAdapter(adapter);
 
 		if (isNetworkAvailable()) {
-			Toast.makeText(this, "Red disponible", Toast.LENGTH_LONG).show();
-			GetBlogPostsTask getBlogPostsTask = new GetBlogPostsTask();
-			getBlogPostsTask.postsCount = NUMBER_OF_POSTS;
+			GetBlogPostsTask getBlogPostsTask = new GetBlogPostsTask(feeds, adapter);
 			getBlogPostsTask.execute();
 		}
 		else {
