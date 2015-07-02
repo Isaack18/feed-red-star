@@ -35,6 +35,8 @@ public class MainActivity extends Activity {
 
 		if (isNetworkAvailable()) {
 			Toast.makeText(this, "Red disponible", Toast.LENGTH_LONG).show();
+			GetBlogPostsTask getBlogPostsTask = new GetBlogPostsTask();
+			getBlogPostsTask.execute();
 		}
 		else {
 			Toast.makeText(this, "Red no disponible", Toast.LENGTH_LONG).show();
